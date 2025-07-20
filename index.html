@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Weave - Pixel Art Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="main-header">
+            <h1>Dream Weave</h1>
+            <button id="how-to-use-button" class="action-button help-button">
+                <i class="material-icons">help_outline</i> How to Use
+            </button>
+        </header>
+
+        <div class="main-content">
+            <div class="controls-panel-left">
+                <h2>Tools</h2>
+                <div class="tool-group">
+                    <button id="draw-tool" class="tool-button active" title="Draw" data-color="blue"><i class="material-icons">edit</i></button>
+                    <button id="erase-tool" class="tool-button" title="Erase" data-color="grey"><i class="material-icons">layers_clear</i></button>
+                    <button id="fill-tool" class="tool-button" title="Fill" data-color="green"><i class="material-icons">format_color_fill</i></button>
+                    <button id="eyedropper-tool" class="tool-button" title="Eyedropper" data-color="yellow"><i class="material-icons">colorize</i></button>
+                    <button id="gradient-tool" class="tool-button" title="Gradient" data-color="purple"><i class="material-icons">gradient</i></button>
+                </div>
+                <div class="brush-size-wrapper">
+                    <label>Brush Size: <span id="brush-size-value">1</span></label>
+                    <input type="range" id="brush-size" min="1" max="10" value="1">
+                </div>
+                
+                <h2>Color Palette</h2>
+                <div id="color-palette" class="color-palette"></div>
+                <div class="custom-color-wrapper">
+                    <label for="color-picker">Primary Color</label>
+                    <input type="color" id="color-picker" value="#FF8F00">
+                </div>
+
+                <h2>Gradient Colors</h2>
+                <div class="gradient-picker-wrapper">
+                    <div class="gradient-color-control">
+                        <label>Start</label>
+                        <input type="color" id="gradient-picker-start" value="#FF8F00">
+                    </div>
+                    <div class="gradient-color-control">
+                        <label>End</label>
+                        <input type="color" id="gradient-picker-end" value="#FFFFFF">
+                    </div>
+                </div>
+                <button id="apply-bg-gradient" class="action-button">Apply to Layer BG</button>
+            </div>
+
+            <div class="canvas-container">
+                <canvas id="pixel-canvas"></canvas>
+            </div>
+
+            <div class="controls-panel-right">
+                <h2>History & Grid</h2>
+                <div class="tool-group">
+                   <button id="undo-button" class="tool-button" title="Undo"><i class="material-icons">undo</i></button>
+                   <button id="redo-button" class="tool-button" title="Redo"><i class="material-icons">redo</i></button>
+                   <button id="toggle-grid-button" class="tool-button" title="Toggle Grid"><i class="material-icons">grid_on</i></button>
+                </div>
+
+                <h2>Layers</h2>
+                <div id="layers-panel" class="layers-panel"></div>
+                <button id="add-layer-button" class="action-button"><i class="material-icons">add_box</i> New Layer</button>
+                <button id="clear-layer-button" class="action-button"><i class="material-icons">delete_sweep</i> Clear Layer</button>
+                
+                <h2>Examples</h2>
+                <div class="example-buttons">
+                    <button id="example-welcome" class="action-button">Landscape</button>
+                    <button id="example-apple" class="action-button">Apple</button>
+                    <button id="example-cat" class="action-button">Cat</button>
+                </div>
+
+                <h2>Canvas</h2>
+                <div class="size-inputs">
+                    <input type="number" id="canvas-width-input" value="32" min="8" max="256">
+                    <label>x</label>
+                    <input type="number" id="canvas-height-input" value="32" min="8" max="256">
+                </div>
+                <button id="resize-button" class="action-button">Resize</button>
+                <button id="export-button" class="action-button"><i class="material-icons">save_alt</i> Export PNG</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="modal-container" class="modal-container hidden">
+        <div class="modal-content">
+            <button id="modal-close-button" class="modal-close-button">&times;</button>
+            <h2>How to Use Dream Weave</h2>
+            <h3>Tools & Colors</h3>
+            <p><strong>Draw/Erase:</strong> Click and drag on the canvas. Use the slider to change the brush size. You will see a live preview of your brush.</p>
+            <p><strong>Fill:</strong> Fills an entire area of the same color with your main selected color.</p>
+            <p><strong>Eyedropper:</strong> Click anywhere on the canvas to pick up a color and make it your active drawing color.</p>
+            <p><strong>Gradient Tool:</strong> Use the "Gradient Colors" pickers, then click a start and end point on the canvas. Or, use "Apply to BG" to fill the layer.</p>
+             <h3>Layers & History</h3>
+            <p><strong>Layers:</strong> Add new layers to draw on top of your work. Click the 'X' to delete a layer. Only the active (highlighted) layer can be edited. Inactive layers will appear faded.</p>
+            <p><strong>Undo/Redo:</strong> Step backward or forward through your changes on the currently selected layer.</p>
+        </div>
+    </div>
+
+    <div id="welcome-modal-container" class="modal-container">
+        <div class="modal-content welcome-modal">
+            <h1>Welcome to Dream Weave!</h1>
+            <p>We've loaded a default image to get you started.</p>
+            <p>You can draw over it, or click the button below to start with a blank canvas.</p>
+            <div class="welcome-buttons">
+                <button id="welcome-clear-button" class="action-button">Start Fresh</button>
+                <button id="welcome-close-button" class="action-button">Keep Image</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="art-examples.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
